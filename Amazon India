@@ -1,0 +1,30 @@
+import time
+from selenium import webdriver
+from selenium.webdriver.remote.webelement import WebElement
+driver = webdriver.Chrome(executable_path='C:\driverr\chromedriver.exe')
+driver.get('URL of the product from amazon')
+
+
+bb = False
+while not bb:
+    try:
+        buynow = driver.find_element_by_xpath('//*[@id="buy-now-button"]')
+        print('Back in Stock:) ,Buy Now is clicked')
+        buynow.click()
+        bb = True
+        sign = driver.find_element_by_xpath('//*[@id="ap_email"]')
+        #After the product's back in stock... the upcoming lines are for automated login
+        sign.send_keys('Username')
+        cont = driver.find_element_by_xpath('//*[@id="continue"]')
+        cont.click()
+        pswd: WebElement = driver.find_element_by_xpath('//*[@id="ap_password"]')
+        pswd.send_keys('Password')
+        fin = driver.find_element_by_xpath('//*[@id="signInSubmit"]')
+        fin.click()
+
+
+    except:
+        adb = driver.find_element_by_xpath('//*[@id="availability"]/span')
+        print('Out of Stock')
+        time.sleep(100)
+        driver.refresh()
